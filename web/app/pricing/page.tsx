@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useState } from "react";
-import { Check, Minus, Sparkles, Zap, ShieldCheck } from "lucide-react";
+
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
@@ -98,12 +98,12 @@ export default function PricingPage() {
         />
 
         <div className="mb-10 flex justify-center">
-          <div className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-bg-surface p-1 text-sm">
+          <div className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 p-1 text-sm shadow-sm">
             <button
               onClick={() => setYearly(false)}
               className={cn(
-                "rounded-full px-4 py-1.5 transition",
-                !yearly ? "bg-white/10 text-ink" : "text-ink-muted"
+                "rounded-full px-4 py-1.5 transition font-semibold",
+                !yearly ? "bg-white text-slate-900 shadow-sm border border-slate-200" : "text-slate-600 hover:text-slate-900"
               )}
             >
               Monthly
@@ -111,27 +111,27 @@ export default function PricingPage() {
             <button
               onClick={() => setYearly(true)}
               className={cn(
-                "rounded-full px-4 py-1.5 transition flex items-center gap-1.5",
-                yearly ? "bg-white/10 text-ink" : "text-ink-muted"
+                "rounded-full px-4 py-1.5 transition flex items-center gap-1.5 font-semibold",
+                yearly ? "bg-white text-slate-900 shadow-sm border border-slate-200" : "text-slate-600 hover:text-slate-900"
               )}
             >
               Yearly
-              <span className="rounded-full bg-cyan-glow/15 px-2 py-0.5 text-[10px] font-medium text-cyan-glow">
+              <span className="rounded-full bg-cyan-100 px-2 py-0.5 text-[10px] font-bold text-cyan-700">
                 −16%
               </span>
             </button>
           </div>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-3">
+        <div className="grid gap-6 lg:grid-cols-3 max-w-6xl mx-auto items-stretch">
           {PLANS.map((p) => (
             <PlanCard key={p.id} plan={p} yearly={yearly} />
           ))}
         </div>
 
-        <p className="mt-10 text-center text-sm text-ink-muted">
+        <p className="mt-12 text-center text-sm text-slate-500 font-medium">
           Need 50+ seats, on-prem, or air-gapped?{" "}
-          <a href="/contact#enterprise" className="text-cyan-glow underline-offset-4 hover:underline">
+          <a href="/contact#enterprise" className="text-cyan-600 font-bold underline-offset-4 hover:underline">
             Talk to our enterprise team →
           </a>
         </p>
@@ -149,57 +149,59 @@ function PlanCard({ plan, yearly }: { plan: Plan; yearly: boolean }) {
   return (
     <div
       className={cn(
-        "relative rounded-2xl border p-7 transition",
+        "relative rounded-3xl border p-8 transition flex flex-col h-full",
         plan.highlight
-          ? "border-cyan-glow/40 bg-bg-surface shadow-glow"
+          ? "border-cyan-400 bg-white shadow-[0_8px_30px_rgb(6,182,212,0.12)] scale-[1.02]"
           : plan.premium
-          ? "border-accent-violet/40 bg-gradient-to-b from-bg-elevated to-bg-surface shadow-[0_0_50px_-10px_rgba(123,92,255,0.4)]"
-          : "border-white/10 bg-bg-surface/60"
+          ? "border-violet-300 bg-gradient-to-b from-slate-50 to-white shadow-lg"
+          : "border-slate-200 bg-white shadow-sm hover:shadow-md"
       )}
     >
       {plan.highlight && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-cyan-glow px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-bg shadow-glow-sm">
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 px-4 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">
           Most popular
         </div>
       )}
       {plan.premium && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-accent-violet to-cyan-glow px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-4 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">
           Premium
         </div>
       )}
 
-      <div className="flex items-center gap-2">
-        {plan.id === "free" && <Sparkles className="h-4 w-4 text-ink-muted" />}
-        {plan.id === "pro" && <Zap className="h-4 w-4 text-cyan-glow" />}
-        {plan.id === "max" && <ShieldCheck className="h-4 w-4 text-accent-violet" />}
-        <h3 className="text-xl font-semibold">{plan.name}</h3>
+      <div className="flex items-center gap-3">
+        {plan.id === "free" && <i className="fa-solid fa-sparkles text-slate-400 text-lg"></i>}
+        {plan.id === "pro" && <i className="fa-solid fa-bolt text-cyan-600 text-lg"></i>}
+        {plan.id === "max" && <i className="fa-solid fa-shield-halved text-violet-600 text-lg"></i>}
+        <h3 className="text-2xl font-bold text-slate-900">{plan.name}</h3>
       </div>
-      <p className="mt-1 text-sm text-ink-muted">{plan.tagline}</p>
+      <p className="mt-2 text-sm text-slate-600">{plan.tagline}</p>
 
-      <div className="mt-6 flex items-baseline gap-1">
-        <span className="text-5xl font-semibold tracking-tight">${price}</span>
-        <span className="text-sm text-ink-muted">/ seat / mo</span>
+      <div className="mt-8 flex items-baseline gap-1">
+        <span className="text-5xl font-bold tracking-tight text-slate-900">${price}</span>
+        <span className="text-sm text-slate-500 font-medium">/ seat / mo</span>
       </div>
-      {yearly && plan.monthly > 0 && (
-        <div className="mt-1 text-xs text-ink-dim">
+      {yearly && plan.monthly > 0 ? (
+        <div className="mt-2 text-xs text-slate-400 font-medium h-4">
           billed ${plan.yearly} yearly
         </div>
+      ) : (
+        <div className="mt-2 h-4"></div>
       )}
 
       <Button
         href={plan.href}
         size="lg"
         variant={plan.premium ? "max" : plan.highlight ? "primary" : "secondary"}
-        className="mt-6 w-full"
+        className="mt-8 w-full"
       >
         {plan.cta}
       </Button>
 
-      <ul className="mt-7 space-y-2.5">
+      <ul className="mt-10 space-y-4 flex-1">
         {plan.features.map((f) => (
-          <li key={f} className="flex items-start gap-2 text-sm text-ink-muted">
-            <Check className="mt-0.5 h-4 w-4 flex-none text-cyan-glow" />
-            <span>{f}</span>
+          <li key={f} className="flex items-start gap-3 text-sm text-slate-700 font-medium">
+            <i className="fa-solid fa-check mt-1 text-cyan-500 text-[10px] bg-cyan-50 p-1 rounded-full"></i>
+            <span className="leading-tight">{f}</span>
           </li>
         ))}
       </ul>
@@ -236,31 +238,31 @@ function ComparisonTable() {
   return (
     <Section className="py-16">
       <SectionHeading title="Compare plans" subtitle="Every capability, side by side." />
-      <div className="overflow-x-auto rounded-2xl border border-white/10 bg-bg-surface/40">
+      <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm mt-8">
         <table className="min-w-full text-sm">
           <thead>
-            <tr className="text-left text-xs uppercase tracking-wider text-ink-dim">
-              <th className="px-5 py-4 font-medium">Feature</th>
-              <th className="px-5 py-4 font-medium">Free</th>
-              <th className="px-5 py-4 font-medium text-cyan-glow">Pro</th>
-              <th className="px-5 py-4 font-medium text-accent-violet">Max</th>
+            <tr className="text-left text-xs uppercase tracking-wider text-slate-500 border-b border-slate-200 bg-slate-50/50">
+              <th className="px-6 py-5 font-bold">Feature</th>
+              <th className="px-6 py-5 font-bold text-slate-700">Free</th>
+              <th className="px-6 py-5 font-bold text-cyan-700">Pro</th>
+              <th className="px-6 py-5 font-bold text-violet-700">Max</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-slate-100">
             {COMPARE.map((row, i) => (
               <Fragment key={i}>
                 {row.group && (
-                  <tr className="bg-white/[0.02]">
-                    <td colSpan={4} className="px-5 py-2 text-xs font-semibold uppercase tracking-wider text-ink-dim">
+                  <tr className="bg-slate-50">
+                    <td colSpan={4} className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-slate-500">
                       {row.group}
                     </td>
                   </tr>
                 )}
-                <tr className="border-t border-white/5">
-                  <td className="px-5 py-3 text-ink">{row.label}</td>
-                  <td className="px-5 py-3"><Cell v={row.free} /></td>
-                  <td className="px-5 py-3"><Cell v={row.pro} /></td>
-                  <td className="px-5 py-3"><Cell v={row.max} /></td>
+                <tr className="hover:bg-slate-50/50 transition-colors">
+                  <td className="px-6 py-4 text-slate-900 font-semibold">{row.label}</td>
+                  <td className="px-6 py-4"><Cell v={row.free} /></td>
+                  <td className="px-6 py-4"><Cell v={row.pro} /></td>
+                  <td className="px-6 py-4"><Cell v={row.max} /></td>
                 </tr>
               </Fragment>
             ))}
@@ -272,9 +274,9 @@ function ComparisonTable() {
 }
 
 function Cell({ v }: { v: string | boolean }) {
-  if (v === true) return <Check className="h-4 w-4 text-cyan-glow" />;
-  if (v === false) return <Minus className="h-4 w-4 text-ink-dim" />;
-  return <span className="text-ink-muted">{v}</span>;
+  if (v === true) return <i className="fa-solid fa-check text-emerald-500"></i>;
+  if (v === false) return <i className="fa-solid fa-minus text-slate-300"></i>;
+  return <span className="text-slate-600 font-medium">{v}</span>;
 }
 
 const FAQS = [
@@ -308,14 +310,16 @@ function FAQ() {
   return (
     <Section className="py-20">
       <SectionHeading title="Frequently asked" />
-      <div className="mx-auto grid max-w-4xl gap-3">
+      <div className="mx-auto grid max-w-4xl gap-4 mt-8">
         {FAQS.map((f) => (
-          <details key={f.q} className="group rounded-xl border border-white/10 bg-bg-surface/60 p-5 open:bg-bg-elevated/60">
-            <summary className="flex cursor-pointer list-none items-center justify-between font-medium text-ink">
+          <details key={f.q} className="group rounded-2xl border border-slate-200 bg-white shadow-sm p-6 open:bg-slate-50 open:shadow-md transition-all cursor-pointer">
+            <summary className="flex list-none items-center justify-between font-bold text-slate-900 text-lg outline-none select-none">
               {f.q}
-              <span className="text-ink-dim transition group-open:rotate-45">+</span>
+              <span className="text-slate-400 transition-transform duration-300 group-open:rotate-45 flex items-center justify-center">
+                <i className="fa-solid fa-plus"></i>
+              </span>
             </summary>
-            <p className="mt-3 text-sm text-ink-muted">{f.a}</p>
+            <p className="mt-4 text-base text-slate-600 leading-relaxed pr-8">{f.a}</p>
           </details>
         ))}
       </div>
@@ -325,12 +329,13 @@ function FAQ() {
 
 function Refund() {
   return (
-    <Section className="py-16">
-      <div className="mx-auto max-w-3xl rounded-2xl border border-white/10 bg-bg-surface/60 p-8 text-center">
-        <h3 className="text-lg font-semibold">30-day refund policy</h3>
-        <p className="mt-2 text-sm text-ink-muted">
+    <Section className="py-16 pb-32">
+      <div className="mx-auto max-w-3xl rounded-3xl border border-slate-200 bg-white shadow-sm p-10 text-center relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-cyan-400 to-emerald-400"></div>
+        <h3 className="text-2xl font-bold text-slate-900">30-day refund policy</h3>
+        <p className="mt-4 text-base leading-relaxed text-slate-600">
           If RoboAgent doesn't save you a meaningful amount of debugging time in the first 30 days, email{" "}
-          <a className="text-cyan-glow" href="mailto:billing@roboagent.ai">billing@roboagent.ai</a> for a full refund.
+          <a className="text-cyan-600 font-semibold hover:underline underline-offset-2" href="mailto:billing@roboagent.ai">billing@roboagent.ai</a> for a full refund.
           No invoices, no hoops. Yearly plans are pro-rated to the day.
         </p>
       </div>

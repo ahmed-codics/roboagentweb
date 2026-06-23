@@ -42,8 +42,8 @@ function getNode(id: string) {
 
 export function ROSGraph({ className }: { className?: string }) {
   return (
-    <div className={cn("relative w-full overflow-hidden rounded-2xl glass shadow-ring", className)}>
-      <div className="flex items-center justify-between border-b border-white/5 px-4 py-2.5">
+    <div className={cn("relative w-full overflow-hidden rounded-2xl bg-[#0a1424] glass shadow-ring", className)}>
+      <div className="flex items-center justify-between bg-[#0a1424] border-b border-white/5 px-4 py-2.5">
         <div className="flex items-center gap-2 text-[11px] font-mono text-ink-dim">
           <span className="h-1.5 w-1.5 rounded-full bg-accent-green animate-pulse-soft" />
           ros graph · 12 nodes · 8 topics · 4 tf frames

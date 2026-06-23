@@ -6,79 +6,74 @@ const config: Config = {
     "./components/**/*.{ts,tsx}",
     "./content/**/*.{md,mdx}",
   ],
-  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        bg: {
-          DEFAULT: "#05070d",
-          surface: "#0a0d18",
-          elevated: "#0f1424",
-          ridge: "#161c30",
-        },
-        ink: {
-          DEFAULT: "#e7ecf5",
-          muted: "#9aa3b9",
-          dim: "#5b6478",
-          faint: "#2c3346",
+        slate: {
+          50: "#f8fafc",
+          100: "#f1f5f9",
+          200: "#e2e8f0",
+          300: "#cbd5e1",
+          400: "#94a3b8",
+          500: "#64748b",
+          600: "#475569",
+          700: "#334155",
+          800: "#1e293b",
+          900: "#0f172a",
         },
         cyan: {
-          glow: "#22e6ff",
-          neon: "#00d4ff",
-          DEFAULT: "#0bbedc",
-          deep: "#0a7a8a",
+          50: "#ecfeff",
+          100: "#cffafe",
+          200: "#a5f3fc",
+          300: "#67e8f9",
+          400: "#22d3ee",
+          500: "#06b6d4",
+          600: "#0891b2",
+          700: "#0e7490",
         },
-        accent: {
-          blue: "#3a7afe",
-          violet: "#7b5cff",
-          amber: "#ffb547",
-          rose: "#ff6b8a",
-          green: "#3ddc97",
+        emerald: {
+          500: "#10b981",
+          600: "#059669",
         },
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "ui-sans-serif", "sans-serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "ui-monospace", "Menlo", "monospace"],
       },
-      boxShadow: {
-        glow: "0 0 60px -10px rgba(34, 230, 255, 0.45)",
-        "glow-sm": "0 0 30px -5px rgba(34, 230, 255, 0.35)",
-        ring: "0 0 0 1px rgba(255,255,255,0.06), 0 8px 30px rgba(0,0,0,0.4)",
-      },
-      backgroundImage: {
-        "grid-faint":
-          "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
-        "radial-glow":
-          "radial-gradient(800px circle at 20% 0%, rgba(34,230,255,0.10), transparent 50%), radial-gradient(700px circle at 90% 30%, rgba(123,92,255,0.08), transparent 60%)",
-      },
       animation: {
-        "pulse-soft": "pulse 4s cubic-bezier(0.4,0,0.6,1) infinite",
-        "scan": "scan 8s linear infinite",
+        "fade-in-up": "fadeInUp 0.8s ease-out forwards",
+        "pulse-glow": "pulseGlow 4s infinite",
+        "fade-in": "fadeIn 0.5s ease-in-out",
+        "slide-up": "slideUp 0.5s ease-out",
+        "bounce-in": "bounceIn 0.6s ease-out",
         "float": "float 6s ease-in-out infinite",
-        "fade-up": "fadeUp 0.6s ease-out both",
-        "blink": "blink 1.1s steps(2) infinite",
-        "spotlight": "spotlight 2s ease .75s 1 forwards",
       },
       keyframes: {
-        scan: {
-          "0%": { transform: "translateY(-100%)" },
-          "100%": { transform: "translateY(100%)" },
+        fadeInUp: {
+          "0%": { opacity: "0", transform: "translateY(30px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        pulseGlow: {
+          "0%, 100%": { opacity: "0.8" },
+          "50%": { opacity: "0.4" },
+        },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        slideUp: {
+          "0%": { transform: "translateY(20px)" },
+          "100%": { transform: "translateY(0)" },
+        },
+        bounceIn: {
+          "0%": { transform: "scale(0.3)", opacity: "0" },
+          "50%": { transform: "scale(1.05)", opacity: "1" },
+          "70%": { transform: "scale(0.9)" },
+          "100%": { transform: "scale(1)" },
         },
         float: {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-8px)" },
-        },
-        fadeUp: {
-          "0%": { opacity: "0", transform: "translateY(12px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        blink: {
-          "0%": { opacity: "1" },
-          "50%": { opacity: "0" },
-        },
-        spotlight: {
-          "0%": { opacity: "0", transform: "translate(-72%, -62%) scale(0.5)" },
-          "100%": { opacity: "1", transform: "translate(-50%,-40%) scale(1)" },
+          "50%": { transform: "translateY(-12px)" },
         },
       },
     },

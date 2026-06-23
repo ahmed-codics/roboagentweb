@@ -33,9 +33,9 @@ export function TerminalPreview({ className }: { className?: string }) {
   const visible = SCRIPT.slice(0, Math.min(step, SCRIPT.length));
 
   return (
-    <div className={cn("relative rounded-2xl glass shadow-ring overflow-hidden", className)}>
+    <div className={cn("relative rounded-2xl overflow-hidden bg-[#0a1424] glass shadow-ring", className)}>
       {/* Title bar */}
-      <div className="flex items-center justify-between border-b border-white/5 px-4 py-2.5">
+      <div className="flex items-center justify-between bg-[#0a1424] border-b border-white/5 px-4 py-2.5">
         <div className="flex items-center gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+
 import { DOCS_NAV } from "@/lib/docs-nav";
 import { CodeBlock } from "@/components/CodeBlock";
 
@@ -29,14 +29,14 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
 
   return (
     <div>
-      <div className="text-xs uppercase tracking-wider text-ink-dim">{entry.group.title}</div>
-      <h1 className="mt-2 text-4xl font-semibold tracking-tight">{entry.link.title}</h1>
-      <p className="mt-3 text-ink-muted">
-        This is a placeholder page for <code className="font-mono text-cyan-glow">{path}</code>.
-        The full docs system loads MDX content from <code className="font-mono">/content/docs/</code> at build time.
+      <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">{entry.group.title}</div>
+      <h1 className="mt-2 text-4xl font-bold tracking-tight text-slate-900">{entry.link.title}</h1>
+      <p className="mt-4 text-lg text-slate-600 leading-relaxed">
+        This is a placeholder page for <code className="font-mono text-cyan-600 bg-cyan-50 px-1 py-0.5 rounded text-sm">{path}</code>.
+        The full docs system loads MDX content from <code className="font-mono text-slate-700 bg-slate-100 px-1 py-0.5 rounded text-sm">/content/docs/</code> at build time.
       </p>
 
-      <h2 className="mt-10 text-2xl font-semibold tracking-tight">Example</h2>
+      <h2 className="mt-12 text-2xl font-bold tracking-tight text-slate-900">Example</h2>
       <CodeBlock
         className="mt-4"
         filename={`docs · ${path}`}
@@ -44,8 +44,8 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
 roboagent ${path.replace(/\//g, " ")}`}
       />
 
-      <h2 className="mt-10 text-2xl font-semibold tracking-tight">Related</h2>
-      <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+      <h2 className="mt-12 text-2xl font-bold tracking-tight text-slate-900">Related</h2>
+      <ul className="mt-5 grid gap-3 sm:grid-cols-2">
         {entry.group.links
           .filter((l) => l.slug !== path)
           .slice(0, 4)
@@ -53,10 +53,10 @@ roboagent ${path.replace(/\//g, " ")}`}
             <li key={l.slug}>
               <Link
                 href={`/docs/${l.slug}`}
-                className="flex items-center justify-between rounded-lg border border-white/10 bg-bg-surface/60 p-3 text-sm text-ink-muted hover:border-cyan-glow/30 hover:text-ink"
+                className="flex items-center justify-between rounded-xl border border-slate-200 bg-white shadow-sm p-4 text-slate-600 font-medium hover:border-cyan-400 hover:text-cyan-700 hover:shadow-md transition-all"
               >
                 {l.title}
-                <ArrowRight className="h-3.5 w-3.5" />
+                <i className="fa-solid fa-arrow-right text-xs"></i>
               </Link>
             </li>
           ))}

@@ -22,9 +22,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body className="min-h-screen bg-bg text-ink antialiased font-sans">
-        <div className="pointer-events-none fixed inset-0 -z-10 bg-radial-glow" />
+    <html lang="en">
+      <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      </head>
+      <body className="min-h-screen bg-slate-50 text-slate-600 antialiased font-sans overflow-x-hidden">
+        <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+          <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-cyan-500/20 rounded-full blur-[128px] animate-pulse-glow" />
+          <div className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-emerald-500/15 rounded-full blur-[128px] animate-pulse-glow" style={{ animationDelay: '2s' }} />
+        </div>
         <Nav />
         <main className="relative">{children}</main>
         <Footer />

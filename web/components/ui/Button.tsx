@@ -6,23 +6,23 @@ type Variant = "primary" | "secondary" | "ghost" | "outline" | "max";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-glow/50";
+  "inline-flex items-center justify-center gap-2 rounded-xl font-bold transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-cyan-glow text-bg hover:bg-cyan-neon shadow-glow-sm hover:shadow-glow",
+    "bg-gradient-to-r from-cyan-500 to-emerald-500 text-white shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:-translate-y-1",
   secondary:
-    "bg-white/[0.06] text-ink hover:bg-white/[0.1] border border-white/10",
-  ghost: "text-ink-muted hover:text-ink hover:bg-white/[0.04]",
+    "text-slate-700 border border-slate-300 bg-white shadow-sm hover:border-blue-400 hover:bg-blue-50 hover:-translate-y-1",
+  ghost: "text-slate-600 hover:text-slate-900 hover:bg-slate-100",
   outline:
-    "border border-white/15 text-ink hover:border-cyan-glow/50 hover:text-cyan-glow",
-  max: "relative bg-gradient-to-r from-cyan-glow via-accent-violet to-accent-blue text-white shadow-[0_0_30px_-5px_rgba(123,92,255,0.6)] hover:shadow-[0_0_50px_-5px_rgba(123,92,255,0.8)]",
+    "border border-slate-300 text-slate-700 hover:border-cyan-400 hover:text-cyan-600 bg-white",
+  max: "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1",
 };
 
 const sizes: Record<Size, string> = {
-  sm: "h-8 px-3 text-sm",
-  md: "h-10 px-4 text-sm",
-  lg: "h-12 px-6 text-base",
+  sm: "h-9 px-4 text-sm",
+  md: "h-11 px-6 text-sm",
+  lg: "h-14 px-8 text-sm",
 };
 
 export interface ButtonProps

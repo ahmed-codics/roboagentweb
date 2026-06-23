@@ -12,12 +12,12 @@ export default function Page() {
       <Hero />
 
       {/* Trusted by / logo strip */}
-      <div className="border-y border-white/5 bg-bg-surface/40 py-10">
+      <div className="border-y border-slate-200 bg-slate-50 py-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 md:flex-row md:justify-between">
-          <div className="text-xs uppercase tracking-widest text-ink-dim">
+          <div className="text-xs uppercase tracking-widest text-slate-500">
             Trusted by robotics teams shipping in production
           </div>
-          <div className="flex flex-wrap items-center gap-x-10 gap-y-3 font-mono text-sm text-ink-dim">
+          <div className="flex flex-wrap items-center gap-x-10 gap-y-3 font-mono text-sm text-slate-500">
             <span>VERTICAL</span>
             <span>HIBIKI</span>
             <span>KARELIA</span>

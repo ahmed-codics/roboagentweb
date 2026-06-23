@@ -1,6 +1,5 @@
 "use client";
 
-import { ArrowRight, Download, BookOpen, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "./ui/Button";
 import { TerminalPreview } from "./TerminalPreview";
@@ -9,21 +8,20 @@ import { ROSGraph } from "./ROSGraph";
 export function Hero() {
   return (
     <section className="relative overflow-hidden">
-      {/* Background grid + scan */}
+      {/* Background grid */}
       <div className="absolute inset-0 -z-10 bg-grid mask-fade-b" />
-      <div className="absolute inset-x-0 top-0 -z-10 h-[700px] bg-radial-glow" />
-      <div className="absolute left-1/2 top-1/3 -z-10 h-px w-[80%] -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-glow/40 to-transparent blur-sm" />
+      <div className="absolute left-1/2 top-1/3 -z-10 h-px w-[80%] -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent blur-sm" />
 
       <div className="mx-auto max-w-7xl px-6 pt-20 pb-24 md:pt-28 md:pb-32">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr]">
-          <div className="max-w-2xl">
+        <div className="grid items-center gap-12 lg:gap-16 lg:grid-cols-2">
+          <div className="max-w-2xl relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-ink-muted backdrop-blur"
+              className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-200 bg-white shadow-sm text-xs font-bold text-slate-500 uppercase tracking-wide"
             >
-              <Sparkles className="h-3.5 w-3.5 text-cyan-glow" />
+              <i className="fa-solid fa-sparkles text-cyan-500"></i>
               <span>Now in private beta · Ubuntu 22.04 / 24.04</span>
             </motion.div>
 
@@ -31,7 +29,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.05 }}
-              className="text-balance text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl lg:text-[68px]"
+              className="text-balance text-4xl font-bold leading-[1.05] tracking-tight text-slate-900 md:text-6xl lg:text-[68px]"
             >
               The AI IDE built for{" "}
               <span className="text-gradient">robotics.</span>
@@ -41,13 +39,13 @@ export function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.12 }}
-              className="mt-6 max-w-xl text-lg leading-relaxed text-ink-muted"
+              className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600"
             >
               RoboAgent understands your{" "}
-              <span className="text-ink">ROS2 workspace</span>, your{" "}
-              <span className="text-ink">launch graph</span>, your{" "}
-              <span className="text-ink">TF tree</span>, and your{" "}
-              <span className="text-ink">bag files</span> — then debugs, simulates, and
+              <span className="font-semibold text-slate-800">ROS2 workspace</span>, your{" "}
+              <span className="font-semibold text-slate-800">launch graph</span>, your{" "}
+              <span className="font-semibold text-slate-800">TF tree</span>, and your{" "}
+              <span className="font-semibold text-slate-800">bag files</span> — then debugs, simulates, and
               deploys with you. Not just your code. Your robot.
             </motion.p>
 
@@ -58,13 +56,13 @@ export function Hero() {
               className="mt-8 flex flex-wrap items-center gap-3"
             >
               <Button href="/download" size="lg" variant="primary">
-                <Download className="h-4 w-4" /> Download for Linux
+                <i className="fa-solid fa-download"></i> Download for Linux
               </Button>
-              <Button href="/docs" size="lg" variant="outline">
-                <BookOpen className="h-4 w-4" /> Read the docs
+              <Button href="/docs" size="lg" variant="secondary">
+                <i className="fa-solid fa-book-open"></i> Read the docs
               </Button>
               <Button href="/register" size="lg" variant="ghost">
-                Get started <ArrowRight className="h-4 w-4" />
+                Get started <i className="fa-solid fa-arrow-right"></i>
               </Button>
             </motion.div>
 
@@ -72,7 +70,7 @@ export function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.35 }}
-              className="mt-10 grid max-w-lg grid-cols-3 gap-6 border-t border-white/5 pt-6"
+              className="mt-10 grid max-w-lg grid-cols-3 gap-6 border-t border-slate-200 pt-6"
             >
               <Stat label="ROS2 Humble · Jazzy" value="Native" />
               <Stat label="Sim-in-the-loop" value="Gazebo · Ignition" />
@@ -80,7 +78,7 @@ export function Hero() {
             </motion.div>
           </div>
 
-          <div className="relative">
+          <div className="relative w-full min-w-0 mx-auto max-w-xl lg:max-w-none">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -106,8 +104,8 @@ export function Hero() {
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <div className="text-xs uppercase tracking-wider text-ink-dim">{label}</div>
-      <div className="mt-1 font-mono text-sm text-ink">{value}</div>
+      <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">{label}</div>
+      <div className="mt-1 font-mono text-sm font-semibold text-slate-900">{value}</div>
     </div>
   );
 }

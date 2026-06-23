@@ -65,14 +65,14 @@ export default function BlogPage() {
           title="Engineering notes from the robotics frontier."
           subtitle="Deep dives, post-mortems, and field reports from our team and the community."
         />
-        <div className="mt-2 flex flex-wrap items-center justify-center gap-1.5 text-sm">
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm font-medium">
           {CATEGORIES.map((c) => (
             <button
               key={c}
-              className={`rounded-full border px-3 py-1.5 transition ${
+              className={`rounded-full border px-4 py-1.5 transition shadow-sm ${
                 c === "All"
-                  ? "border-cyan-glow/40 bg-cyan-glow/10 text-cyan-glow"
-                  : "border-white/10 text-ink-muted hover:border-white/20 hover:text-ink"
+                  ? "border-cyan-400 bg-cyan-50 text-cyan-700 font-bold"
+                  : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:text-slate-900"
               }`}
             >
               {c}
@@ -83,18 +83,18 @@ export default function BlogPage() {
 
       <Section className="pt-0">
         {/* Featured */}
-        <Link href={`/blog/${POSTS[0].slug}`} className="group">
-          <Card className="overflow-hidden">
-            <div className="grid gap-0 lg:grid-cols-[1.2fr_1fr]">
-              <div className="p-8 md:p-10">
-                <div className="text-xs uppercase tracking-wider text-cyan-glow">{POSTS[0].cat} · {POSTS[0].date} · {POSTS[0].read}</div>
-                <h2 className="mt-3 text-2xl font-semibold tracking-tight md:text-3xl group-hover:text-cyan-glow">{POSTS[0].title}</h2>
-                <p className="mt-3 text-ink-muted">{POSTS[0].excerpt}</p>
+        <Link href={`/blog/${POSTS[0].slug}`} className="group block">
+          <Card className="overflow-hidden p-0 border-slate-200">
+            <div className="grid gap-0 lg:grid-cols-[1.2fr_1fr] h-full">
+              <div className="p-10 flex flex-col justify-center">
+                <div className="text-xs font-bold uppercase tracking-widest text-cyan-600">{POSTS[0].cat} · <span className="text-slate-400">{POSTS[0].date}</span> · <span className="text-slate-400">{POSTS[0].read}</span></div>
+                <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl group-hover:text-cyan-600 transition-colors text-slate-900">{POSTS[0].title}</h2>
+                <p className="mt-4 text-lg text-slate-600 leading-relaxed">{POSTS[0].excerpt}</p>
               </div>
-              <div className="relative min-h-[220px] bg-gradient-to-br from-bg-elevated to-bg overflow-hidden">
-                <div className="absolute inset-0 bg-grid mask-radial opacity-50" />
+              <div className="relative min-h-[280px] bg-gradient-to-br from-slate-50 to-white overflow-hidden border-l border-slate-100">
+                <div className="absolute inset-0 bg-grid opacity-30" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-6xl font-mono text-cyan-glow/20">{"</>"}</div>
+                  <div className="h-32 w-32 rounded-3xl bg-white shadow-xl border border-slate-100 flex items-center justify-center text-5xl font-mono text-cyan-500 transform group-hover:scale-105 group-hover:rotate-3 transition-transform duration-500">{"</>"}</div>
                 </div>
               </div>
             </div>
@@ -102,14 +102,17 @@ export default function BlogPage() {
         </Link>
 
         {/* Grid */}
-        <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-stretch">
           {POSTS.slice(1).map((p) => (
-            <Link href={`/blog/${p.slug}`} key={p.slug} className="group">
-              <Card className="h-full p-6">
-                <div className="text-xs uppercase tracking-wider text-cyan-glow">{p.cat}</div>
-                <h3 className="mt-3 text-lg font-semibold leading-snug text-ink group-hover:text-cyan-glow">{p.title}</h3>
-                <p className="mt-2 text-sm text-ink-muted">{p.excerpt}</p>
-                <div className="mt-4 text-xs text-ink-dim">{p.date} · {p.read}</div>
+            <Link href={`/blog/${p.slug}`} key={p.slug} className="group block">
+              <Card className="h-full p-8 flex flex-col border-slate-200">
+                <div className="text-[11px] font-bold uppercase tracking-widest text-cyan-600 mb-4">{p.cat}</div>
+                <h3 className="text-xl font-bold leading-snug text-slate-900 group-hover:text-cyan-600 transition-colors">{p.title}</h3>
+                <p className="mt-3 text-base text-slate-600 leading-relaxed flex-1">{p.excerpt}</p>
+                <div className="mt-6 pt-6 border-t border-slate-100 text-[11px] font-semibold uppercase tracking-wider text-slate-400 flex justify-between">
+                  <span>{p.date}</span>
+                  <span>{p.read}</span>
+                </div>
               </Card>
             </Link>
           ))}

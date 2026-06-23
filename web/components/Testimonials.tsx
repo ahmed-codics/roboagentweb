@@ -50,17 +50,17 @@ export function Testimonials() {
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {QUOTES.map((q) => (
         <Card key={q.name} className="p-6">
-          <p className="text-sm leading-relaxed text-ink">{q.quote}</p>
-          <div className="mt-5 flex items-center gap-3 border-t border-white/5 pt-4">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-cyan-glow/30 to-accent-violet/30 text-xs font-semibold text-ink ring-1 ring-white/10">
+          <p className="text-base leading-relaxed text-slate-600">{q.quote}</p>
+          <div className="mt-5 flex items-center gap-3 border-t border-slate-100 pt-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-cyan-100 to-emerald-100 text-sm font-bold text-cyan-800 ring-1 ring-cyan-200">
               {q.name
                 .split(" ")
                 .map((n) => n[0])
                 .join("")}
             </div>
-            <div className="text-xs">
-              <div className="text-ink">{q.name}</div>
-              <div className="text-ink-dim">{q.role} · {q.company}</div>
+            <div className="text-sm">
+              <div className="font-bold text-slate-900">{q.name}</div>
+              <div className="text-slate-500">{q.role} · {q.company}</div>
             </div>
           </div>
         </Card>
