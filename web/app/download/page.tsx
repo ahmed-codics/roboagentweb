@@ -88,7 +88,7 @@ export default function DownloadPage() {
                 ))}
               </div>
 
-              <Button variant={os.primary ? "primary" : "secondary"} size="lg" className="mt-5 w-full" href={os.id === 'ubuntu' ? "https://github.com/Mohamedsaied8/RoboAgent/releases/download/Linux/roboagent_1.120.0-1778204270_amd64.deb" : `/download/${os.id}`}>
+              <Button variant={os.primary ? "primary" : "secondary"} size="lg" className="mt-5 w-full" href={os.id === 'ubuntu' ? "http://127.0.0.1:8000/download/roboagent" : `/download/${os.id}`}>
                 <i className="fa-solid fa-download"></i> Download for {os.name}
               </Button>
 
