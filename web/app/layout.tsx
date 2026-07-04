@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: {
@@ -32,9 +33,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-cyan-500/20 rounded-full blur-[128px] animate-pulse-glow" />
           <div className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-emerald-500/15 rounded-full blur-[128px] animate-pulse-glow" style={{ animationDelay: '2s' }} />
         </div>
-        <Nav />
-        <main className="relative">{children}</main>
-        <Footer />
+        <Providers>
+          <Nav />
+          <main className="relative">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

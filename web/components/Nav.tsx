@@ -79,7 +79,7 @@ export function Nav() {
           <Button variant="ghost" size="sm" href="/login">
             Sign in
           </Button>
-          <Button variant="primary" size="sm" href="/download">
+          <Button variant="primary" size="sm" href="https://github.com/Mohamedsaied8/RoboAgent/releases/download/Linux/roboagent_1.120.0-1778204270_amd64.deb">
             <i className="fa-solid fa-download"></i> Download
           </Button>
         </div>
@@ -114,7 +114,7 @@ export function Nav() {
               <Button variant="secondary" size="lg" href="/login">
                 Sign in
               </Button>
-              <Button variant="primary" size="lg" href="/download">
+              <Button variant="primary" size="lg" href="https://github.com/Mohamedsaied8/RoboAgent/releases/download/Linux/roboagent_1.120.0-1778204270_amd64.deb">
                 Download
               </Button>
             </div>

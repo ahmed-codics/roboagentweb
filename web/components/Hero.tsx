@@ -55,7 +55,7 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mt-8 flex flex-wrap items-center gap-3"
             >
-              <Button href="/download" size="lg" variant="primary">
+              <Button href="https://github.com/Mohamedsaied8/RoboAgent/releases/download/Linux/roboagent_1.120.0-1778204270_amd64.deb" size="lg" variant="primary">
                 <i className="fa-solid fa-download"></i> Download for Linux
               </Button>
               <Button href="/docs" size="lg" variant="secondary">

@@ -15,7 +15,7 @@ export function CTA() {
           first question. The agent does the rest.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Button href="/download" size="lg" variant="primary">
+          <Button href="https://github.com/Mohamedsaied8/RoboAgent/releases/download/Linux/roboagent_1.120.0-1778204270_amd64.deb" size="lg" variant="primary">
             <i className="fa-solid fa-download"></i> Download RoboAgent
           </Button>
           <Button href="/contact#enterprise" size="lg" variant="secondary">

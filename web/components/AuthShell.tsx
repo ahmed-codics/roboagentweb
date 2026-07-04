@@ -1,5 +1,9 @@
+"use client";
+
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import { Logo } from "./Logo";
 
 export function AuthShell({
@@ -41,15 +45,18 @@ export function AuthShell({
 }
 
 export function OAuthButtons() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams?.get("callbackUrl") || "/dashboard";
+
   return (
-    <div className="grid grid-cols-2 gap-3">
-      <button type="button" className="flex h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 transition-all duration-200">
+    <div className="grid grid-cols-1 gap-3">
+      <button 
+        type="button" 
+        onClick={() => signIn("github", { callbackUrl })}
+        className="flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 transition-all duration-200"
+      >
         <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current text-slate-800"><path d="M12 .3a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.4.7-4.1-1.6-4.1-1.6-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.6-1.4-5.6-6.1 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.3a11.5 11.5 0 016 0c2.3-1.6 3.3-1.3 3.3-1.3.7 1.7.2 2.9.1 3.2.8.9 1.2 2 1.2 3.3 0 4.7-2.9 5.7-5.6 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0012 .3"/></svg>
-        <span>GitHub</span>
-      </button>
-      <button type="button" className="flex h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 transition-all duration-200">
-        <svg viewBox="0 0 24 24" className="h-4 w-4"><path fill="#EA4335" d="M5.3 14.4l-.8 3.1-3.1.1A11.9 11.9 0 010 12c0-2 .5-3.8 1.3-5.4l2.8.5L5.4 9.9a7.2 7.2 0 00-.4 2.1c0 .8.1 1.6.3 2.4z"/><path fill="#FBBC04" d="M23.8 9.8c.1.7.2 1.4.2 2.2 0 .8-.1 1.6-.3 2.4l-3.5-.3a7.2 7.2 0 00-.7-2.5l4.3-1.8z"/><path fill="#34A853" d="M19.6 18.7A11.9 11.9 0 0112 24a11.9 11.9 0 01-10.6-6.4l3.9-3.2a7.2 7.2 0 0010.4 3l3.9 3.2-.0.1z"/><path fill="#4285F4" d="M19.8 5.5l-3.9 3.2a7.2 7.2 0 00-12 3l-3.9-3.2A11.9 11.9 0 0112 0a11.9 11.9 0 017.8 2.7l-.0.1.0 2.7z"/></svg>
-        <span>Google</span>
+        <span>Continue with GitHub</span>
       </button>
     </div>
   );
