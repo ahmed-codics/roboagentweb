@@ -20,3 +20,9 @@ The full document is split for navigation. See `00_RoboAgent_Master_Plan.md` for
 14. [Moat & Defensibility](./14_moat_defensibility.md)
 15. [Failure Modes](./15_failure_modes.md)
 16. [Final Recommendation](./16_final_recommendation.md)
+17. [Usage Metering & the Model Gateway](./17_usage_metering_and_model_gateway.md)
+
+## Implementation briefs
+
+- [IDE SSO](./10_ide_sso_implementation_prompt.md) — shipped
+- [IDE telemetry reporting](./11_ide_telemetry_implementation_prompt.md) — specced, not built

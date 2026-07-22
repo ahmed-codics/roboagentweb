@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Logo } from "./Logo";
 import { Button } from "./ui/Button";
 import { cn } from "@/lib/cn";
+import { supabase } from "@/lib/supabase/client";
+import { displayName, useSession } from "@/lib/supabase/use-session";
 
 const links = [
   { href: "/", label: "Home" },
@@ -21,6 +23,17 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const pathname = usePathname();
+  const router = useRouter();
+  // The nav previously rendered a static "Sign in" button, so a signed-in user
+  // was told they were signed out on every page.
+  const { user, loading: sessionLoading } = useSession();
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    setOpen(false);
+    router.push("/");
+    router.refresh();
+  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -76,9 +89,32 @@ export function Nav() {
           >
             <i className="fa-brands fa-github text-lg"></i>
           </Link>
-          <Button variant="ghost" size="sm" href="/login">
-            Sign in
-          </Button>
+          {/* Render nothing auth-related until the session is known — flashing
+              "Sign in" at a signed-in user is the bug this replaced. */}
+          {sessionLoading ? (
+            <div className="h-9 w-24" aria-hidden />
+          ) : user ? (
+            <>
+              <Button variant="ghost" size="sm" href="/dashboard">
+                Dashboard
+              </Button>
+              <button
+                onClick={signOut}
+                className="inline-flex h-9 items-center gap-2 rounded-xl px-3 text-sm font-bold text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
+                title={user.email ?? undefined}
+              >
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-cyan-600 text-[10px] font-bold uppercase text-white">
+                  {displayName(user).slice(0, 2) || "?"}
+                </span>
+                <span className="hidden lg:inline max-w-[10rem] truncate">{displayName(user)}</span>
+                <i className="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+              </button>
+            </>
+          ) : (
+            <Button variant="ghost" size="sm" href="/login">
+              Sign in
+            </Button>
+          )}
           <Button variant="primary" size="sm" href="https://github.com/Mohamedsaied8/RoboAgent/releases/download/Linux/roboagent_1.120.0-1778204270_amd64.deb">
             <i className="fa-solid fa-download"></i> Download
           </Button>
@@ -111,9 +147,23 @@ export function Nav() {
               );
             })}
             <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-6">
-              <Button variant="secondary" size="lg" href="/login">
-                Sign in
-              </Button>
+              {sessionLoading ? null : user ? (
+                <>
+                  <div className="px-1 pb-1 text-xs font-semibold text-slate-400 truncate">
+                    Signed in as {user.email}
+                  </div>
+                  <Button variant="secondary" size="lg" href="/dashboard">
+                    Dashboard
+                  </Button>
+                  <Button variant="ghost" size="lg" onClick={signOut}>
+                    Sign out
+                  </Button>
+                </>
+              ) : (
+                <Button variant="secondary" size="lg" href="/login">
+                  Sign in
+                </Button>
+              )}
               <Button variant="primary" size="lg" href="https://github.com/Mohamedsaied8/RoboAgent/releases/download/Linux/roboagent_1.120.0-1778204270_amd64.deb">
                 Download
               </Button>

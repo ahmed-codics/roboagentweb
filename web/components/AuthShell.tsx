@@ -1,10 +1,15 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { Logo } from "./Logo";
+import { supabase } from "@/lib/supabase/client";
+
+// The app is served under this basePath (see next.config.ts). OAuth redirectTo
+// needs an absolute URL to a real page, and window.location.origin does not
+// include the basePath, so we prepend it explicitly.
+const BASE_PATH = "/roboagent";
 
 export function AuthShell({
   title,
@@ -44,15 +49,39 @@ export function AuthShell({
   );
 }
 
-export function OAuthButtons() {
+/**
+ * `callbackUrl` overrides the query-string value. The login page passes the
+ * destination it resolved itself, which is how a desktop (PKCE) sign-in survives
+ * an OAuth round trip — the IDE sends its parameters bare, with no callbackUrl
+ * for this component to find.
+ */
+export function OAuthButtons({ callbackUrl }: { callbackUrl?: string } = {}) {
+  return (
+    <Suspense fallback={null}>
+      <OAuthButtonsInner callbackUrl={callbackUrl} />
+    </Suspense>
+  );
+}
+
+function OAuthButtonsInner({ callbackUrl }: { callbackUrl?: string }) {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams?.get("callbackUrl") || "/dashboard";
+  const callbackPath = callbackUrl || searchParams?.get("callbackUrl") || "/dashboard";
+
+  const signInWithGithub = async () => {
+    const redirectTo = `${window.location.origin}${BASE_PATH}${
+      callbackPath.startsWith("/") ? callbackPath : `/${callbackPath}`
+    }`;
+    await supabase.auth.signInWithOAuth({
+      provider: "github",
+      options: { redirectTo },
+    });
+  };
 
   return (
     <div className="grid grid-cols-1 gap-3">
-      <button 
-        type="button" 
-        onClick={() => signIn("github", { callbackUrl })}
+      <button
+        type="button"
+        onClick={signInWithGithub}
         className="flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 transition-all duration-200"
       >
         <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current text-slate-800"><path d="M12 .3a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.4.7-4.1-1.6-4.1-1.6-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.6-1.4-5.6-6.1 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.3a11.5 11.5 0 016 0c2.3-1.6 3.3-1.3 3.3-1.3.7 1.7.2 2.9.1 3.2.8.9 1.2 2 1.2 3.3 0 4.7-2.9 5.7-5.6 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0012 .3"/></svg>

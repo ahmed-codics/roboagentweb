@@ -15,8 +15,10 @@ export function Logo({ href = "/", compact = false }: { href?: string; compact?:
           priority
         />
       </span>
+      {/* Unbounded runs wide — drop a size step and pull tracking in hard so the
+          wordmark occupies the same optical width the Inter version did. */}
       {!compact && (
-        <span className="font-bold tracking-tight text-slate-900 text-xl">
+        <span className="font-display font-bold tracking-[-0.045em] text-slate-900 text-lg">
           Robo<span className="text-cyan-600">Agent</span>
         </span>
       )}

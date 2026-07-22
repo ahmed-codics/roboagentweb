@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { AuthShell, Field } from "@/components/AuthShell";
 import { Button } from "@/components/ui/Button";
+import { supabase } from "@/lib/supabase/client";
 
 export default function ForgotPage() {
   const [email, setEmail] = useState("");
@@ -11,7 +12,7 @@ export default function ForgotPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -21,12 +22,17 @@ export default function ForgotPage() {
     }
 
     setLoading(true);
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(
+      email,
+      { redirectTo: `${window.location.origin}/roboagent/login` },
+    );
+    setLoading(false);
 
-    // Simulate reset link API call
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-    }, 1200);
+    if (resetError) {
+      setError(resetError.message);
+      return;
+    }
+    setSubmitted(true);
   };
 
   return (

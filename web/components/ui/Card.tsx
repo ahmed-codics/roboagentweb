@@ -15,9 +15,12 @@ export function Card({
   return (
     <div
       className={cn(
-        "relative rounded-[2rem] border border-slate-200 bg-white shadow-md overflow-hidden group",
+        /* 24px reconciles with the 12px controls; 32px against rounded-xl buttons
+           read as two different design systems. Resting shadow is 4% black —
+           the old shadow-md → shadow-2xl hover was a 6x jump in pure black. */
+        "relative rounded-3xl border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden group",
         hover &&
-          "transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:border-cyan-300",
+          "transition-[box-shadow,transform,border-color] duration-300 hover:shadow-[0_16px_48px_rgb(0,0,0,0.08)] hover:-translate-y-1 hover:border-cyan-300",
         glow && "glow-border",
         className
       )}

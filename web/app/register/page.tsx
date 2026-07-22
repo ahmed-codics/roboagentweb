@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AuthShell, OAuthButtons, Divider, Field } from "@/components/AuthShell";
 import { Button } from "@/components/ui/Button";
+import { supabase } from "@/lib/supabase/client";
+import { useSession } from "@/lib/supabase/use-session";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { session, loading: sessionLoading } = useSession();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +18,15 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Mirror of the guard in /login: a signed-in user must never be shown a signup
+  // form. Because every Robotics Corner app shares one Supabase session, users
+  // arrive here already authenticated (e.g. from the pricing page) and being
+  // asked to create an account reads as having been silently logged out.
+  useEffect(() => {
+    if (!sessionLoading && session) router.replace("/dashboard");
+  }, [sessionLoading, session, router]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -35,12 +46,23 @@ export default function RegisterPage() {
     }
 
     setLoading(true);
+    const { data, error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: name } },
+    });
+    setLoading(false);
 
-    // Simulate register API call
-    setTimeout(() => {
-      setLoading(false);
-      router.push("/dashboard");
-    }, 1200);
+    if (signUpError) {
+      setError(signUpError.message);
+      return;
+    }
+    if (!data.session) {
+      // Email confirmation is enabled -> no session yet.
+      setError("Check your email to confirm your account, then sign in.");
+      return;
+    }
+    router.push("/dashboard");
   };
 
   return (

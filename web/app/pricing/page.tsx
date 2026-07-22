@@ -2,8 +2,11 @@
 
 import { Fragment, useState } from "react";
 
+import Link from "next/link";
+
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
+import { useSession } from "@/lib/supabase/use-session";
 import { cn } from "@/lib/cn";
 
 type Plan = {
@@ -18,6 +21,33 @@ type Plan = {
   highlight?: boolean;
   premium?: boolean;
 };
+
+/**
+ * Signed-in visitors must never be sent to /register — they already have an
+ * account, and being asked to sign up again reads as "you're logged out".
+ *
+ * Free resolves to the dashboard (there is nothing to buy). Pro/Max open a
+ * prefilled email, deliberately NOT /contact: that form is a stub that fakes a
+ * success message without sending anything, so upgrade intent would be lost
+ * silently. hello@roboagent.ai is the address the contact page itself gives for
+ * anything that doesn't fit the form.
+ *
+ * This is interim. Once the Kashier checkout exists it replaces this function
+ * and nothing else on the page has to change.
+ */
+function signedInCta(plan: Plan): { cta: string; href: string } {
+  if (plan.id === "free") return { cta: "Go to dashboard", href: "/dashboard" };
+
+  const subject = `Upgrade my account to RoboAgent ${plan.name}`;
+  const body =
+    `Hi RoboAgent team,\n\nI'd like to upgrade my account to the ${plan.name} plan.\n\n` +
+    `Account email: \n\nThanks.`;
+
+  return {
+    cta: `Upgrade to ${plan.name}`,
+    href: `mailto:hello@roboagent.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
+  };
+}
 
 const PLANS: Plan[] = [
   {
@@ -87,6 +117,11 @@ const PLANS: Plan[] = [
 
 export default function PricingPage() {
   const [yearly, setYearly] = useState(false);
+  // Gate on `loading`: rendering the signed-out CTA before the cookie has been
+  // read is the same bug that used to make the nav show "Sign in" to signed-in
+  // users (see the note in lib/supabase/use-session.ts).
+  const { user, loading: sessionLoading } = useSession();
+  const signedIn = !sessionLoading && !!user;
 
   return (
     <>
@@ -125,15 +160,15 @@ export default function PricingPage() {
 
         <div className="grid gap-6 lg:grid-cols-3 max-w-6xl mx-auto items-stretch">
           {PLANS.map((p) => (
-            <PlanCard key={p.id} plan={p} yearly={yearly} />
+            <PlanCard key={p.id} plan={p} yearly={yearly} signedIn={signedIn} />
           ))}
         </div>
 
         <p className="mt-12 text-center text-sm text-slate-500 font-medium">
           Need 50+ seats, on-prem, or air-gapped?{" "}
-          <a href="/contact#enterprise" className="text-cyan-600 font-bold underline-offset-4 hover:underline">
+          <Link href="/contact#enterprise" className="text-cyan-600 font-bold underline-offset-4 hover:underline">
             Talk to our enterprise team →
-          </a>
+          </Link>
         </p>
       </Section>
 
@@ -144,8 +179,9 @@ export default function PricingPage() {
   );
 }
 
-function PlanCard({ plan, yearly }: { plan: Plan; yearly: boolean }) {
+function PlanCard({ plan, yearly, signedIn }: { plan: Plan; yearly: boolean; signedIn: boolean }) {
   const price = yearly ? Math.round(plan.yearly / 12) : plan.monthly;
+  const { cta, href } = signedIn ? signedInCta(plan) : { cta: plan.cta, href: plan.href };
   return (
     <div
       className={cn(
@@ -189,12 +225,12 @@ function PlanCard({ plan, yearly }: { plan: Plan; yearly: boolean }) {
       )}
 
       <Button
-        href={plan.href}
+        href={href}
         size="lg"
         variant={plan.premium ? "max" : plan.highlight ? "primary" : "secondary"}
         className="mt-8 w-full"
       >
-        {plan.cta}
+        {cta}
       </Button>
 
       <ul className="mt-10 space-y-4 flex-1">

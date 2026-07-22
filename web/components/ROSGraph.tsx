@@ -40,19 +40,25 @@ function getNode(id: string) {
   return nodes.find((n) => n.id === id)!;
 }
 
-export function ROSGraph({ className }: { className?: string }) {
+/* `compact` shortens the plot for the hero cascade, where the panel sits below
+   the terminal and the pair must still resolve above the fold. The features
+   page uses the full-height default. */
+export function ROSGraph({ className, compact = false }: { className?: string; compact?: boolean }) {
   return (
     <div className={cn("relative w-full overflow-hidden rounded-2xl bg-[#0a1424] glass shadow-ring", className)}>
       <div className="flex items-center justify-between bg-[#0a1424] border-b border-white/5 px-4 py-2.5">
-        <div className="flex items-center gap-2 text-[11px] font-mono text-ink-dim">
-          <span className="h-1.5 w-1.5 rounded-full bg-accent-green animate-pulse-soft" />
-          ros graph · 12 nodes · 8 topics · 4 tf frames
+        <div className="flex min-w-0 items-center gap-2 text-[11px] font-mono text-ink-dim">
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent-green animate-pulse-soft" />
+          <span className="truncate">ros graph · 12 nodes · 8 topics</span>
         </div>
-        <div className="text-[11px] font-mono text-ink-dim">live</div>
+        <div className="shrink-0 pl-2 text-[11px] font-mono text-accent-green">live</div>
       </div>
       <div className="relative bg-gradient-to-b from-[#070b14] to-[#050810] p-2">
         <div className="bg-grid-fine absolute inset-0 opacity-30 mask-radial" />
-        <svg viewBox="0 0 600 420" className="relative w-full h-[280px] md:h-[360px]">
+        <svg
+          viewBox="0 0 600 420"
+          className={cn("relative w-full", compact ? "h-[190px]" : "h-[280px] md:h-[360px]")}
+        >
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
               <path d="M 0 0 L 10 5 L 0 10 z" fill="#22e6ff" opacity="0.7" />
@@ -130,7 +136,7 @@ export function ROSGraph({ className }: { className?: string }) {
                   x={n.x}
                   y={n.y + 24}
                   textAnchor="middle"
-                  className="fill-ink-muted"
+                  className="fill-ink-dim"
                   style={{ font: "10px ui-monospace,Menlo,monospace" }}
                 >
                   {n.label}

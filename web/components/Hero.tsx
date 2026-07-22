@@ -84,15 +84,18 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15 }}
             >
-              <TerminalPreview />
+              <TerminalPreview className="shadow-panel" />
             </motion.div>
+            {/* Cascades below the terminal rather than floating over it. The old
+                absolute overlay covered ~35% of the panel width and clipped every
+                output line mid-sentence — the terminal is the hero's whole point. */}
             <motion.div
               initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.4 }}
-              className="absolute -bottom-12 -right-4 hidden w-[340px] md:block"
+              className="relative z-10 -mt-6 ml-auto hidden w-[78%] max-w-[360px] md:block"
             >
-              <ROSGraph />
+              <ROSGraph compact className="shadow-panel" />
             </motion.div>
           </div>
         </div>

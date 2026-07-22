@@ -33,3 +33,8 @@ Thumbs.db
 # Misc
 *.pem
 .vercel
+
+# Env backups (the .env*.local pattern above misses these)
+.env.local.*
+*.env.bak
+*.bak
